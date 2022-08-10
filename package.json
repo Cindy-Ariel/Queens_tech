@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "name": "queens_tech",
+  "description": "projeto final modulo 04",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemom./src/server.js",
+    "start": 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cindy-Ariel/Queens_tech.git"
+  },
+  "author": "Cindy, Oslene, Gabriela Ana Carolina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cindy-Ariel/Queens_tech/issues"
+  },
+  "homepage": "https://github.com/Cindy-Ariel/Queens_tech#readme"
+}
