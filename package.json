@@ -1,16 +1,15 @@
 {
   "type": "module",
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "sqlite3": "^5.0.11"
   },
   "name": "queens_tech",
   "description": "projeto final modulo 04",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "scripts": {
-    "dev": "nodemom./src/server.js",
-    "start": 
+    "dev": "nodemom./src/server.js"
   },
   "repository": {
     "type": "git",
