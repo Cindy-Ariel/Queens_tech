@@ -17,6 +17,6 @@ class ClienteModel {
     }
   }
   
+export default ClienteModel;
 
-  export default ClienteModel;
 
