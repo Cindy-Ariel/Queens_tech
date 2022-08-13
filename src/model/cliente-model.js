@@ -1,6 +1,6 @@
-<<<<<<< Updated upstream
-=======
+
 class ClienteModel {
+
     constructor(cpf,nome, email,telefone,rua,numero,bairro,cidade,uf,cep,senha) {
       this.cpf = cpf;
       this.nome = nome;
@@ -17,5 +17,6 @@ class ClienteModel {
     }
   }
   
+
   export default ClienteModel;
->>>>>>> Stashed changes
+
