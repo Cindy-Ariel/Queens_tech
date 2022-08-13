@@ -34,8 +34,8 @@ class ClienteDAO {
         return new Promise((resolve, reject) => {
             this.bd.run(
 
-                "INSERT INTO CLIENTE VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?)",
-                
+                "INSERT INTO CLIENTE VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                ClienteModel.id,
                 ClienteModel.cpf,
                 ClienteModel.nome,
                 ClienteModel.email,
@@ -47,11 +47,11 @@ class ClienteDAO {
                 ClienteModel.uf,
                 ClienteModel.cep,
                 ClienteModel.senha,
-                (error, rows) => {
+                (error) => {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(rows);
+                        resolve('Cliente inserido com sucesso!');
                     }
                 }
             );
