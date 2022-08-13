@@ -15,7 +15,7 @@ class ClienteDAO {
             });
         });
     };
-
+   
     pegarClientePorID= (id) => {
         return new Promise((resolve, reject) => {
             this.bd.get("SELECT * FROM CLIENTE WHERE ID = ?", id, (error, rows) => {
@@ -28,6 +28,23 @@ class ClienteDAO {
         });
     };
 
+    pegaUmClienteporEmail = (email) => {
+        return new Promise((resolve, reject) => {
+          this.bd.get(
+            "SELECT * FROM CLIENTE WHERE EMAIL = ?",
+            email,
+            (error, rows) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(rows);
+              }
+            }
+          );
+        });
+      }; 
+
+    
 
 
     insereCliente = (ClienteModel) => {
@@ -58,10 +75,10 @@ class ClienteDAO {
         });
     };
 
-    atualizaCliente = (ClienteModel, id) => {
+    atualizaCliente = (id, ClienteModel ) => {
         return new Promise((resolve, reject) => {
             this.bd.run(
-                "UPDATE CLIENTE SET CPF = ?, NOME = ?, EMAIL = ?, TELEFONE = ?, RUA = ?, NUMERO = ?, CIDADE = ?, UF = ?, CEP = ? SENHA = ? WHERE ID = ?",
+                "UPDATE CLIENTE SET CPF = ?, NOME = ?, EMAIL = ?, TELEFONE = ?, RUA = ?, NUMERO = ?, BAIRRO = ? , CIDADE = ?, UF = ?, CEP = ? , SENHA = ? WHERE ID = ?",
     
                 ClienteModel.cpf,
                 ClienteModel.nome,
@@ -75,17 +92,16 @@ class ClienteDAO {
                 ClienteModel.cep,
                 ClienteModel.senha,
                 id,
-                (error, rows) => {
+                (error) => {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(rows);
+                        resolve('Cliente atualizado!');
                     }
                 }
             );
         });
     };
-
 
 
     deletaCliente = (id) => {
@@ -94,7 +110,7 @@ class ClienteDAO {
                 if (error) {
                     reject(error);
                 } else {
-                    resolve(rows);
+                    resolve('Cliente deletado com sucesso!');
                 }
             });
         });
