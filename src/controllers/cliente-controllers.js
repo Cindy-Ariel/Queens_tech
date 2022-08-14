@@ -1,15 +1,14 @@
 
 import ClienteModel from "../model/cliente-model.js";
-
 import ClienteDAO from "../dao/cliente-DAO.js";
-
-
-//import { validAll as validacoesServices } from "../services/validacao.js";
+import  {validaExistenciaDeCliente}  from "../services/validacoes.js"
+import  {validaTudo}  from "../services/validacoes.js"
 
 const clienteController = (app, bd) => {
   const clienteDAO = new ClienteDAO(bd);
 
-  app.get("/cliente", async (req, res) => {
+
+  app.get("/clientes", async (req, res) => {
     try {
       res.json(await clienteDAO.listaClientes());
     } catch (error) {
@@ -18,13 +17,13 @@ const clienteController = (app, bd) => {
         error: true,
       });
     }
-  });
+  }); 
 
   app.get("/cliente/id/:id", async (req, res) => {
     const id = req.params.id;
     try {
-      const client = await clienteDAO.pegaUmClientePorID(id);
-      res.status(201).json(client);
+      const cliente = await clienteDAO.pegaUmClientePorID(id);
+      validaExistenciaDeCliente(cliente,res)
     } catch (error) {
       res.status(404).json({
         msg: error.message,
@@ -36,8 +35,8 @@ const clienteController = (app, bd) => {
   app.get("/cliente/email/:email", async (req, res) => {
     const email = req.params.email;
     try {
-      const client = await clienteDAO.pegaUmClienteporEmail(email);
-      res.status(201).json(client);
+      const cliente = await clienteDAO.pegaUmClienteporEmail(email);
+      validaExistenciaDeCliente(cliente,res)
     } catch (error) {
       res.status(404).json({
         msg: error.message,
@@ -45,8 +44,6 @@ const clienteController = (app, bd) => {
       });
     }
   });
-
- 
 
   app.post("/cliente", async (req, res) => {
     const body = req.body;
@@ -64,8 +61,7 @@ const clienteController = (app, bd) => {
             body.CEP,
             body.SENHA
         );
-        console.log(novoCliente)
-        res.status(201).json(await clienteDAO.insereCliente(novoCliente));
+        validaTudo(novoCliente, res)
       } catch (error) {
       res.status(400).json({
         msg: error.message,
