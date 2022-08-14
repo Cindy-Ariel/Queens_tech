@@ -6,7 +6,7 @@ class ProdutoDAO {
 
     listaProdutos = () => {
         return new Promise((resolve, reject) => {
-            this.bd.all("SELECT * FROM PRODUTO", (error, rows) => {
+            this.bd.all("SELECT * FROM PRODUTOS", (error, rows) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18,7 +18,7 @@ class ProdutoDAO {
 
     pegaProdutoPorCodigo = (codigo) => {
         return new Promise((resolve, reject) => {
-            this.bd.get("SELECT * FROM PRODUTO WHERE CODIGO = ?", codigo, (error, rows) => {
+            this.bd.get("SELECT * FROM PRODUTOS WHERE CODIGO = ?", codigo, (error, rows) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -31,7 +31,7 @@ class ProdutoDAO {
     pegaProdutoPorCategoria = (categoria) => {
         return new Promise((resolve, reject) => {
             this.bd.get(
-                "SELECT * FROM PRODUTO WHERE CATEGORIA = ?",
+                "SELECT * FROM PRODUTOS WHERE CATEGORIA = ?",
                 categoria,
                 (error, rows) => {
                     if (error) {
@@ -51,7 +51,7 @@ class ProdutoDAO {
         return new Promise((resolve, reject) => {
             this.bd.run(
 
-                "INSERT INTO PRODUTO VALUES (?,?,?,?,?,?,?,?)",
+                "INSERT INTO PRODUTOS VALUES (?,?,?,?,?,?,?,?)",
                 ProdutoModel.codigo,
                 ProdutoModel.nome,
                 ProdutoModel.categoria,
@@ -59,12 +59,12 @@ class ProdutoDAO {
                 ProdutoModel.cor,
                 ProdutoModel.valor,
                 ProdutoModel.descricao,
-                ProdutoModel.fornecedor,
+                ProdutoModel.fornecedor_id,
                 (error) => {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve('Produto insercodigoo com sucesso!');
+                        resolve('Produto inserido com sucesso!');
                     }
                 }
             );
@@ -74,7 +74,7 @@ class ProdutoDAO {
     atualizaProduto = (codigo, ProdutoModel) => {
         return new Promise((resolve, reject) => {
             this.bd.run(
-                "UPDATE PRODUTO SET NOME = ?, CATEGORIA = ?, MARCA = ?, COR = ?, VALOR = ?, DESCRICAO = ?, FORNECEDOR = ? WHERE CODIGO = ?",
+                "UPDATE PRODUTOS SET NOME = ?, CATEGORIA = ?, MARCA = ?, COR = ?, VALOR = ?, DESCRICAO = ?, FORNECEDOR_ID = ? WHERE CODIGO = ?",
 
                 ProdutoModel.nome,
                 ProdutoModel.categoria,
@@ -82,7 +82,7 @@ class ProdutoDAO {
                 ProdutoModel.cor,
                 ProdutoModel.valor,
                 ProdutoModel.descricao,
-                ProdutoModel.fornecedor,
+                ProdutoModel.fornecedor_id,
                 codigo,
                 (error) => {
                     if (error) {
@@ -98,7 +98,7 @@ class ProdutoDAO {
 
     deletaProduto = (codigo) => {
         return new Promise((resolve, reject) => {
-            this.bd.run("DELETE FROM PRODUTO WHERE CODIGO = ?", codigo, (error) => {
+            this.bd.run("DELETE FROM PRODUTOS WHERE CODIGO = ?", codigo, (error) => {
                 if (error) {
                     reject(error);
                 } else {

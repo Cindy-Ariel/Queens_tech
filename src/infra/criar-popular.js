@@ -43,27 +43,29 @@ VALUES
 
 
 // CRIANDO TABELA PRODUTO 
-const CLIENTE_PRODUTO = `
-CREATE TABLE IF NOT EXISTS "PRODUTO" (
+const TABELA_PRODUTOS = `
+CREATE TABLE IF NOT EXISTS "PRODUTOS" (
     "CODIGO" INTEGER PRIMARY KEY AUTOINCREMENT,
     "NOME" varchar(50),
     "CATEGORIA" varchar(50),
     "MARCA" varchar(50),
     "COR" varchar(20),
     "VALOR" Decimal(10,2),
-    "DESCRIÇÃO" varchar(100),
+    "DESCRIÇÃO" varchar(300),
     "FORNECEDOR_ID" varchar(50),
     FOREIGN KEY(FORNECEDOR_ID) REFERENCES FORNECEDORES(ID)
   );`;
 
-  function criaTabelaProduto() {
-    db.run(CLIENTE_PRODUTO, (error)=> {
-        if(error) console.log("Erro ao criar tabela de PRODUTO");
+  function criaTabelaProdutos() {
+    db.run(TABELA_PRODUTOS, (error)=> {
+        if(error) console.log("Erro ao criar tabela de PRODUTOS");
     });
 }
+
+
 
     db.serialize( ()=> {
         criaTabelaCliente();
         populaTabelaCliente();
-        criaTabelaProduto();
+        criaTabelaProdutos();
     });
