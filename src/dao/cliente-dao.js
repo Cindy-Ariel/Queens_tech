@@ -1,4 +1,5 @@
-// bd = banco de dados
+
+
 class ClienteDAO {
     constructor(bd) {
         this.bd = bd;
@@ -16,7 +17,7 @@ class ClienteDAO {
         });
     };
    
-    pegarClientePorID= (id) => {
+    pegaUmClientePorID = (id) => {
         return new Promise((resolve, reject) => {
             this.bd.get("SELECT * FROM CLIENTE WHERE ID = ?", id, (error, rows) => {
                 if (error) {
@@ -25,26 +26,22 @@ class ClienteDAO {
                     resolve(rows);
                 }
             });
+          
+        
         });
     };
 
     pegaUmClienteporEmail = (email) => {
-        return new Promise((resolve, reject) => {
-          this.bd.get(
-            "SELECT * FROM CLIENTE WHERE EMAIL = ?",
-            email,
-            (error, rows) => {
-              if (error) {
+      return new Promise((resolve, reject) => {
+          this.bd.get( "SELECT * FROM CLIENTE WHERE EMAIL = ?", email, (error, rows) => {
+            if (error) {
                 reject(error);
-              } else {
+            } else {
                 resolve(rows);
-              }
-            }
-          );
+            } });
+          
         });
       }; 
-
-    
 
 
     insereCliente = (ClienteModel) => {
@@ -106,7 +103,7 @@ class ClienteDAO {
 
     deletaCliente = (id) => {
         return new Promise((resolve, reject) => {
-            this.bd.run("DELETE FROM CLIENTE WHERE ID = ?", id, (error, rows) => {
+            this.bd.run("DELETE FROM CLIENTE WHERE ID = ?", id, (error) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -115,6 +112,6 @@ class ClienteDAO {
             });
         });
     };
-
+_
 }
 export default ClienteDAO;
