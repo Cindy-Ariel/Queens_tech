@@ -25,21 +25,21 @@ VALUES
     ('145.125.952-07', 'Oslene Silva', 'oslene.silva@hotmail.com.br', 759698-5825, 'Piuma', '5' , 'caicara' , 'Belo Horizonte' , 'MG', '35.145-150','*******'),
     ('078.057.945-34', 'Karol Santos', 'karolsilva@gmail.com', 75952376235, 'Juventino Pitombo', '3', 'Jardim America', 'Sao Paulo', 'SP', '44022-123', '******')
     `
-  
 
 
-    function criaTabelaCliente() {
-        db.run(CLIENTE_TABELA, (error)=> {
-            if(error) console.log("Erro ao criar tabela de cliente");
-        });
-    }
-    
-    
-    function populaTabelaCliente() {
-        db.run(ADD_CLIENTE_DATA , (error)=> {
-           if (error) console.log("Erro ao popular tabela de cliente");
-        });
-    }
+
+function criaTabelaCliente() {
+    db.run(CLIENTE_TABELA, (error) => {
+        if (error) console.log("Erro ao criar tabela de cliente");
+    });
+}
+
+
+function populaTabelaCliente() {
+    db.run(ADD_CLIENTE_DATA, (error) => {
+        if (error) console.log("Erro ao popular tabela de cliente");
+    });
+}
 
 
 // CRIANDO TABELA PRODUTO 
@@ -52,20 +52,41 @@ CREATE TABLE IF NOT EXISTS "PRODUTOS" (
     "COR" varchar(20),
     "VALOR" Decimal(10,2),
     "DESCRIÇÃO" varchar(300),
-    "FORNECEDOR_ID" varchar(50),
+    "FORNECEDOR_ID" INTEGER,
     FOREIGN KEY(FORNECEDOR_ID) REFERENCES FORNECEDORES(ID)
   );`;
 
-  function criaTabelaProdutos() {
-    db.run(TABELA_PRODUTOS, (error)=> {
-        if(error) console.log("Erro ao criar tabela de PRODUTOS");
+function criaTabelaProdutos() {
+    db.run(TABELA_PRODUTOS, (error) => {
+        if (error) console.log("Erro ao criar tabela de PRODUTOS");
+    });
+}
+
+// CRIANDO TABELA FORNECEDORES
+
+const TABELA_FORNECEDORES = `
+CREATE TABLE IF NOT EXISTS "FORNECEDORES" (
+    "ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "CNPJ" varchar(18),
+    "NOME_FANTASIA" varchar(64),
+    "TELEFONE" numeric ,
+    "RUA" varchar(50),
+    "NUMERO" varchar(10),
+    "BAIRRO" varchar(50),
+    "CIDADE" varchar(50),
+    "UF" varchar(2),
+    "CEP" varchar(10)
+  );`;
+function criaTabelaFornecedores() {
+    db.run(TABELA_FORNECEDORES, (error) => {
+        if (error) console.log("Erro ao criar tabela de FORNECEDORES");
     });
 }
 
 
-
-    db.serialize( ()=> {
-        criaTabelaCliente();
-        populaTabelaCliente();
-        criaTabelaProdutos();
-    });
+db.serialize(() => {
+    criaTabelaCliente();
+    populaTabelaCliente();
+    criaTabelaProdutos();
+    criaTabelaFornecedores();
+});
