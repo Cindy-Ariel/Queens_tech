@@ -15,7 +15,7 @@ class FornecedorDAO {
         });
     };
 
-    pegarFornecedorPorID = (id) => {
+    pegaFornecedorPorID = (id) => {
         return new Promise((resolve, reject) => {
             this.bd.get("SELECT * FROM FORNECEDORES WHERE ID = ?", id, (error, rows) => {
                 if (error) {
@@ -77,9 +77,8 @@ class FornecedorDAO {
             this.bd.run(
                 "UPDATE FORNECEDORES SET CNPJ = ?, NOME_FANTASIA = ?, TELEFONE = ?, RUA = ?, NUMERO = ?, BAIRRO = ? , CIDADE = ?, UF = ?, CEP = ? WHERE ID = ?",
 
-                FornecedorModel.cpf,
-                FornecedorModel.nome,
-                FornecedorModel.email,
+                FornecedorModel.cnpj,
+                FornecedorModel.nomeFantasia,
                 FornecedorModel.telefone,
                 FornecedorModel.rua,
                 FornecedorModel.numero,
@@ -87,7 +86,6 @@ class FornecedorDAO {
                 FornecedorModel.cidade,
                 FornecedorModel.uf,
                 FornecedorModel.cep,
-                FornecedorModel.senha,
                 id,
                 (error) => {
                     if (error) {
