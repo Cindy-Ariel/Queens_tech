@@ -2,6 +2,7 @@
 import ProdutoModel from "../model/produto-model.js";
 
 import ProdutoDAO from "../dao/produto-dao.js";
+import  { validaEntradaProduto, verificaSeExisteObjeto,campoNaoVazio }  from "../services/validacoes.js"
 
 
 const ProdutoController = (app, bd) => {
@@ -20,8 +21,9 @@ const ProdutoController = (app, bd) => {
     app.get("/produto/codigo/:codigo", async (req, res) => {
         const codigo = req.params.codigo;
         try {
-            const product = await produtoDAO.pegaProdutoPorCodigo(codigo);
-            res.status(201).json(product);
+            const produto = await produtoDAO.pegaProdutoPorCodigo(codigo)
+            await verificaSeExisteObjeto(produto, `Produto de código '${codigo}' não existe`)
+            res.status(200).json(produto);
         } catch (error) {
             res.status(404).json({
                 msg: error.message
@@ -32,8 +34,9 @@ const ProdutoController = (app, bd) => {
     app.get("/produto/categoria/:categoria", async (req, res) => {
         const categoria = req.params.categoria;
         try {
-            const product = await produtoDAO.pegaProdutoporCategoria(categoria);
-            res.status(201).json(product);
+            const product = await produtoDAO.pegaProdutoPorCategoria(categoria);
+            await verificaSeExisteObjeto(product, `Categoria '${categoria}' não existe`)
+            res.status(200).json(product);
         } catch (error) {
             res.status(404).json({
                 msg: error.message
@@ -55,6 +58,7 @@ const ProdutoController = (app, bd) => {
                 body.DESCRICAO,
                 body.FORNECEDOR_ID,
             );
+            await validaEntradaProduto(novoProduto);
             res.status(201).json(await produtoDAO.insereProduto(novoProduto));
         } catch (error) {
             res.status(400).json({
@@ -66,7 +70,9 @@ const ProdutoController = (app, bd) => {
     app.delete("/produto/codigo/:codigo", async (req, res) => {
         const codigo = req.params.codigo;
         try {
+            const produto = await produtoDAO.pegaProdutoPorCodigo(codigo)
             const delUsuario = await produtoDAO.deletaProduto(codigo);
+            await verificaSeExisteObjeto(produto, `Produto de código '${codigo}' não existe`);
             res.status(201).json(delUsuario);
         } catch (error) {
             res.status(400).json({
@@ -89,10 +95,10 @@ const ProdutoController = (app, bd) => {
                 body.DESCRICAO,
                 body.FORNECEDOR_ID,
             );
-            const attProduto = await ProdutoDAO.atualizaProduto(
-                codigo,
-                ProdutoAtualizado
-            );
+            const produto = await produtoDAO.pegaProdutoPorCodigo(codigo)
+            const attProduto = await produtoDAO.atualizaProduto(codigo,ProdutoAtualizado);
+            await verificaSeExisteObjeto(produto, `Produto de codigo '${codigo}' não existe`)
+                campoNaoVazio(ProdutoAtualizado);
             res.status(200).json(attProduto);
 
         } catch (error) {
@@ -103,4 +109,4 @@ const ProdutoController = (app, bd) => {
     });
 };
 
-export default ProdutoController;
+export default ProdutoController; 

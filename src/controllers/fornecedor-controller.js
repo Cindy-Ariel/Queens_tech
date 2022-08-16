@@ -1,6 +1,7 @@
 
 import FornecedorModel from "../model/Fornecedor-model.js";
 import FornecedorDAO from "../dao/Fornecedor-dao.js";
+import  { validaEntradaFornecedor, verificaSeExisteObjeto,campoNaoVazio }  from "../services/validacoes.js"
 
 const FornecedorController = (app, bd) => {
     const fornecedorDAO = new FornecedorDAO(bd);
@@ -18,8 +19,9 @@ const FornecedorController = (app, bd) => {
     app.get("/fornecedor/id/:id", async (req, res) => {
         const id = req.params.id;
         try {
-            const fornece = await fornecedorDAO.pegaUmFornecedorPorID(id);
-            res.status(201).json(fornece);
+            const fornecedor = await fornecedorDAO.pegaFornecedorPorID(id)
+            await verificaSeExisteObjeto(fornecedor, `Fornecedor de id '${id}' não existe`)
+            res.status(200).json(await fornecedorDAO.pegaFornecedorPorID(id));
         } catch (error) {
             res.status(404).json({
                 msg: error.message
@@ -31,7 +33,8 @@ const FornecedorController = (app, bd) => {
         const nomefantasia = req.params.nomefantasia;
         try {
             const fornece = await fornecedorDAO.pegaFornecedorporNomeFantasia(nomefantasia);
-            res.status(201).json(fornece);
+            await verificaSeExisteObjeto(fornece, `Fornecedor de NOME FANTASIA '${nomefantasia}' não existe`)
+            res.status(200).json(fornece);
         } catch (error) {
             res.status(404).json({
                 msg: error.message
@@ -55,6 +58,8 @@ const FornecedorController = (app, bd) => {
                 body.UF,
                 body.CEP,
             );
+            
+            await validaEntradaFornecedor(novoFornecedor)
             res.status(201).json(await fornecedorDAO.insereFornecedor(novoFornecedor));
             
         } catch (error) {
@@ -67,8 +72,10 @@ const FornecedorController = (app, bd) => {
     app.delete("/fornecedor/id/:id", async (req, res) => {
         const id = req.params.id;
         try {
-            const delUsuario = await fornecedorDAO.deletaFornecedor(id);
-            res.status(201).json(delUsuario);
+            const fornecedor = await fornecedorDAO.pegaFornecedorPorID(id)
+            await verificaSeExisteObjeto(fornecedor, `Fornecedor de id '${id}' não existe`);
+            const delFornecedor = await fornecedorDAO.deletaFornecedor(id)
+            res.status(200).json( delFornecedor);
         } catch (error) {
             res.status(400).json({
                 msg: error.message
@@ -81,8 +88,8 @@ const FornecedorController = (app, bd) => {
         const body = req.body;
 
         try {
-            const FornecedorAtualizado = new FornecedorModel(
-                body.CPF,
+            const fornecedorAtualizado = new FornecedorModel(
+                body.CNPJ,
                 body.NOME_FANTASIA,
                 body.TELEFONE,
                 body.RUA,
@@ -92,10 +99,10 @@ const FornecedorController = (app, bd) => {
                 body.UF,
                 body.CEP,
             );
-            const attFornecedor = await fornecedorDAO.atualizaFornecedor(
-                id,
-                FornecedorAtualizado
-            );
+            const fornecedor = await fornecedorDAO.pegaFornecedorPorID(id)
+            const attFornecedor = await fornecedorDAO.atualizaFornecedor(id,fornecedorAtualizado);
+            await verificaSeExisteObjeto(fornecedor, `Fornecedor de id '${id}' não existe`);
+            campoNaoVazio(fornecedorAtualizado);
             res.status(200).json(attFornecedor);
 
         } catch (error) {
