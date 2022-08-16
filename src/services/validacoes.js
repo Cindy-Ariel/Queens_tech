@@ -1,4 +1,3 @@
-
 import FornecedorDAO from "../dao/Fornecedor-dao.js";
 import ProdutoDAO from "../dao/produto-dao.js";
 import bd from "../infra/sqlite-db.js";
@@ -24,7 +23,7 @@ export const verificaSeExisteObjeto = async (identificador, msgErro) => {
         
 
 //  VALIDANDO FORNECEDOR
-export const validaEntradaFornecedor = async (fornecedor, res) => {
+export const validaEntradaFornecedor = async (fornecedor) => {
     campoNaoVazio(fornecedor) 
     const fornecedores = await fornecedorDAO.listaFornecedores()
     const fornecedorCadastrado = fornecedores.filter(f => f.CNPJ == fornecedor.cnpj)
@@ -36,7 +35,7 @@ export const validaEntradaFornecedor = async (fornecedor, res) => {
 
 
 // VALIDANDO PRODUTO
-export const validaEntradaProduto = async (produto, res) => {
+export const validaEntradaProduto = async (produto) => {
     campoNaoVazio(produto) 
     const produtos = await produtoDAO.listaProdutos()
         const produtoCadastrado = produtos.filter(f => f.NOME == produto.nome)
