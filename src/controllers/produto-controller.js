@@ -2,7 +2,7 @@
 import ProdutoModel from "../model/produto-model.js";
 
 import ProdutoDAO from "../dao/produto-dao.js";
-import  { validaEntradaProduto, verificaSeExisteObjeto,campoNaoVazio }  from "../services/validacoes.js"
+import  { validaEntradaProduto, verificaSeExisteObjeto,verificaCampoVazio }  from "../services/validacoes.js"
 
 
 const ProdutoController = (app, bd) => {
@@ -98,7 +98,7 @@ const ProdutoController = (app, bd) => {
             const produto = await produtoDAO.pegaProdutoPorCodigo(codigo)
             const attProduto = await produtoDAO.atualizaProduto(codigo,ProdutoAtualizado);
             await verificaSeExisteObjeto(produto, `Produto de codigo '${codigo}' não existe`)
-                campoNaoVazio(ProdutoAtualizado);
+                verificaCampoVazio(ProdutoAtualizado);
             res.status(200).json(attProduto);
 
         } catch (error) {

@@ -7,7 +7,7 @@ const produtoDAO = new ProdutoDAO(bd)
 
 
 // VERIFICA CAMPOS
-export const campoNaoVazio = (obj) => {
+export const verificaCampoVazio = (obj) => {
     for (const key in obj) {
         if (!obj[key]) {
             throw new Error(`Campo '${key.toLocaleUpperCase()}' está vazio`)
@@ -15,8 +15,8 @@ export const campoNaoVazio = (obj) => {
     }
 }
 //  VERIFICA SE EXISTE O OBJETO NA TABELA
-export const verificaSeExisteObjeto = async (identificador, msgErro) => {
-    if (!identificador) {
+export const verificaSeExisteObjeto = async (variavel, msgErro) => {
+    if (!variavel) {
         throw new Error(msgErro)
     }
     }
@@ -24,7 +24,7 @@ export const verificaSeExisteObjeto = async (identificador, msgErro) => {
 
 //  VALIDANDO FORNECEDOR
 export const validaEntradaFornecedor = async (fornecedor) => {
-    campoNaoVazio(fornecedor) 
+    verificaCampoVazio(fornecedor) 
     const fornecedores = await fornecedorDAO.listaFornecedores()
     const fornecedorCadastrado = fornecedores.filter(f => f.CNPJ == fornecedor.cnpj)
     if (fornecedorCadastrado.length > 0) {
@@ -36,7 +36,7 @@ export const validaEntradaFornecedor = async (fornecedor) => {
 
 // VALIDANDO PRODUTO
 export const validaEntradaProduto = async (produto) => {
-    campoNaoVazio(produto) 
+    verificaCampoVazio(produto) 
     const produtos = await produtoDAO.listaProdutos()
         const produtoCadastrado = produtos.filter(f => f.NOME == produto.nome)
         if (produtoCadastrado.length > 0) {
@@ -44,6 +44,4 @@ export const validaEntradaProduto = async (produto) => {
         }
     
 }
-
-
 
