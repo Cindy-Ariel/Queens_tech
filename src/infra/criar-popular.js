@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "CLIENTE" (
     "CPF" varchar(14),
     "NOME" varchar(64),
     "EMAIL" varchar(64),
-    "TELEFONE" int(25),
+    "TELEFONE" numeric ,
     "RUA" varchar(50),
     "NUMERO" varchar(10),
     "BAIRRO" varchar(50),
