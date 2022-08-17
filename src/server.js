@@ -10,7 +10,6 @@ const app = express();
 
 app.use(express.json());
 
-
 const corsConfig = {
     origin: "*",
 }
@@ -25,4 +24,3 @@ vendasController(app,bd)
 const port = process.env.PORT || 3000;
 
 app.listen(port);
-
