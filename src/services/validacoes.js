@@ -1,15 +1,17 @@
+import ClienteDAO from "../dao/cliente-DAO.js";
 import FornecedorDAO from "../dao/Fornecedor-dao.js";
 import ProdutoDAO from "../dao/produto-dao.js";
 import bd from "../infra/sqlite-db.js";
 
 const fornecedorDAO = new FornecedorDAO(bd);
 const produtoDAO = new ProdutoDAO(bd)
+const clienteDAO = new ClienteDAO(bd)
 
 
-// VERIFICA CAMPOS
-export const verificaCampoVazio = (obj) => {
-    for (const key in obj) {
-        if (!obj[key]) {
+// VERIFICA SE OS CAMPOS ESTÃO VAZIOS
+export const verificaCampoVazio = (variavel) => {
+    for (const key in variavel) {
+        if (!variavel[key]) {
             throw new Error(`Campo '${key.toLocaleUpperCase()}' está vazio`)
         }
     }
@@ -19,12 +21,12 @@ export const verificaSeExisteObjeto = async (variavel, msgErro) => {
     if (!variavel) {
         throw new Error(msgErro)
     }
-    }
-        
+}
+
 
 //  VALIDANDO FORNECEDOR
 export const validaEntradaFornecedor = async (fornecedor) => {
-    verificaCampoVazio(fornecedor) 
+    verificaCampoVazio(fornecedor)
     const fornecedores = await fornecedorDAO.listaFornecedores()
     const fornecedorCadastrado = fornecedores.filter(f => f.CNPJ == fornecedor.cnpj)
     if (fornecedorCadastrado.length > 0) {
@@ -33,15 +35,27 @@ export const validaEntradaFornecedor = async (fornecedor) => {
 }
 
 
-
 // VALIDANDO PRODUTO
 export const validaEntradaProduto = async (produto) => {
-    verificaCampoVazio(produto) 
+    verificaCampoVazio(produto)
     const produtos = await produtoDAO.listaProdutos()
-        const produtoCadastrado = produtos.filter(f => f.NOME == produto.nome)
-        if (produtoCadastrado.length > 0) {
-            throw new Error(`produto de NOME '${produto.nome}' já cadastrado`)
-        }
-    
+    const produtoCadastrado = produtos.filter(f => f.NOME == produto.nome)
+    if (produtoCadastrado.length > 0) {
+        throw new Error(`produto de NOME '${produto.nome}' já cadastrado`)
+    }
+
 }
 
+// VALIDANDO CLIENTE
+export const validaEntradaCliente = async (cliente) => {
+    verificaCampoVazio(cliente)
+    const clientes = await clienteDAO.listaClientes()
+    const clienteCadastrado = clientes.filter(f => f.CPF == cliente.cpf)
+    if (clienteCadastrado.length > 0) {
+        throw new Error(`cliente de CPF '${cliente.cpf}' já cadastrado`)
+    }
+
+}
+
+
+// export { verificaSeExisteObjeto, verificaCampoVazio, validaEntradaCliente }
