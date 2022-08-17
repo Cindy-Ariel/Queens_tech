@@ -1,6 +1,6 @@
 
-import FornecedorModel from "../model/Fornecedor-model.js";
-import FornecedorDAO from "../dao/Fornecedor-dao.js";
+import FornecedorModel from "../model/fornecedor-model.js";
+import FornecedorDAO from "../dao/fornecedor-dao.js";
 import  { validaEntradaFornecedor, verificaSeExisteObjeto,verificaCampoVazio }  from "../services/validacoes.js"
 
 const FornecedorController = (app, bd) => {
