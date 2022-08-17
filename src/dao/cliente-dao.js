@@ -15,8 +15,8 @@ class ClienteDAO {
             });
         });
     };
-   
-    pegarClientePorID= (id) => {
+
+    pegarUmClientePorID = (id) => {
         return new Promise((resolve, reject) => {
             this.bd.get("SELECT * FROM CLIENTE WHERE ID = ?", id, (error, rows) => {
                 if (error) {
@@ -30,21 +30,21 @@ class ClienteDAO {
 
     pegaUmClienteporEmail = (email) => {
         return new Promise((resolve, reject) => {
-          this.bd.get(
-            "SELECT * FROM CLIENTE WHERE EMAIL = ?",
-            email,
-            (error, rows) => {
-              if (error) {
-                reject(error);
-              } else {
-                resolve(rows);
-              }
-            }
-          );
+            this.bd.get(
+                "SELECT * FROM CLIENTE WHERE EMAIL = ?",
+                email,
+                (error, rows) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(rows);
+                    }
+                }
+            );
         });
-      }; 
+    };
 
-    
+
 
 
     insereCliente = (ClienteModel) => {
@@ -75,11 +75,11 @@ class ClienteDAO {
         });
     };
 
-    atualizaCliente = (id, ClienteModel ) => {
+    atualizaCliente = (id, ClienteModel) => {
         return new Promise((resolve, reject) => {
             this.bd.run(
                 "UPDATE CLIENTE SET CPF = ?, NOME = ?, EMAIL = ?, TELEFONE = ?, RUA = ?, NUMERO = ?, BAIRRO = ? , CIDADE = ?, UF = ?, CEP = ? , SENHA = ? WHERE ID = ?",
-    
+
                 ClienteModel.cpf,
                 ClienteModel.nome,
                 ClienteModel.email,
