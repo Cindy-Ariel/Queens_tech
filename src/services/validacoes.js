@@ -1,31 +1,33 @@
-export const validaExistenciaDeCliente = (cliente , res) => {
-    if (cliente){
-   return  res.status(201).json(cliente);
-   } else {
-    throw new Error("Não há um cliente com a informação inserida")
-   }
- };
+import ClienteDAO from "../dao/cliente-DAO.js";
+import bd from "../infra/sqlite-db.js";
+
+
+const clienteDAO = new ClienteDAO(bd)
  
- export const validaTudo = (cpf,nome, email,telefone,rua,numero,bairro,cidade,uf,cep,senha) => {
-    if (cpf && nome && email && telefone && rua && numero && bairro && cidade && uf && cep && senha) {
-      return true;
-    } else {
-      throw new Error("Alguma informação não foi inserida.");
-    }
+ 
+ const verificaSeExisteObjeto = async (variavel, msgErro) => {
+  if (!variavel) {
+      throw new Error(msgErro)
+  }
   };
+
+ const verificaCampoVazio = (variavel) => {
+  for (const key in variavel) {
+      if (!variavel[key]) {
+          throw new Error(`Campo '${key.toLocaleUpperCase()}' está vazio`)
+      }
+  }
+}
+
+const validaEntradaCliente = async (cliente) => {
+  verificaCampoVazio(cliente) 
+  const clientes = await clienteDAO.listaClientes()
+      const clienteCadastrado = clientes.filter(f => f.CPF == cliente.cpf)
+      if (clienteCadastrado.length > 0) {
+          throw new Error(`cliente de CPF '${cliente.cpf}' já cadastrado`)
+      }
   
-export const validaExistenciaDeFuncionario = (funcionario , res) => {
-    if (funcionario){
-   return  res.status(201).json(funcionario);
-   } else {
-    throw new Error("Não há um funcionario com a informação inserida")
-   }
- };
- 
-export const validaFuncionario = (nome,cpf,rg,cargo,telefone,rua,numero,bairro,cidade,uf,cep,cnpj) => {
-    if (nome && cpf && rg && cargo && telefone && rua && numero && bairro && cidade && uf && cep && cnpj) {
-      return true;
-    } else {
-      throw new Error("Alguma informação não foi inserida.");
-    }
-  };
+}
+
+
+export {verificaSeExisteObjeto, verificaCampoVazio,validaEntradaCliente }
