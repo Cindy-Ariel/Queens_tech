@@ -11,14 +11,6 @@ const clienteDAO = new ClienteDAO(bd)
   }
   };
 
-const validaExistenciaDeVenda = (venda, res) => {
-  if (venda){
- return  res.status(201).json(venda);
- } else {
-  throw new Error("Não há um venda com a informação inserida")
- }
-};
-
  const verificaCampoVazio = (variavel) => {
   for (const key in variavel) {
       if (!variavel[key]) {
@@ -38,4 +30,4 @@ const validaEntradaCliente = async (cliente) => {
 }
 
 
-export {verificaSeExisteObjeto, validaExistenciaDeVenda, verificaCampoVazio,validaEntradaCliente }
+export {verificaSeExisteObjeto, verificaCampoVazio,validaEntradaCliente }
