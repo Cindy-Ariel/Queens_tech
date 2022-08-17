@@ -1,11 +1,13 @@
 import ClienteDAO from "../dao/cliente-DAO.js";
 import FornecedorDAO from "../dao/Fornecedor-dao.js";
 import ProdutoDAO from "../dao/produto-dao.js";
+import FuncionarioDAO from "../dao/funcionario-dao.js";
 import bd from "../infra/sqlite-db.js";
 
 const fornecedorDAO = new FornecedorDAO(bd);
 const produtoDAO = new ProdutoDAO(bd)
 const clienteDAO = new ClienteDAO(bd)
+const funcionarioDAO = new FuncionarioDAO(bd)
 
 
 // VERIFICA SE OS CAMPOS ESTÃO VAZIOS
@@ -57,5 +59,14 @@ export const validaEntradaCliente = async (cliente) => {
 
 }
 
+export const validaEntradaFuncionario = async (funcionario) => {
+    verificaCampoVazio(funcionario)
+    const funcionarios = await funcionarioDAO.listaFuncionarios()
+    const funcionarioCadastrado = funcionarios.filter(f => f.CPF == funcionario.cpf)
+    if (funcionarioCadastrado.length > 0) {
+        throw new Error(`Funcionario de CPF '${funcionario.cpf}' já cadastrado`)
+    }
+
+}
 
 // export { verificaSeExisteObjeto, verificaCampoVazio, validaEntradaCliente }

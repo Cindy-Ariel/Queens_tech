@@ -1,10 +1,9 @@
 import funcionarioModel from "../model/funcionario-model.js";
-import funcionarioDAO from "../dao/funcionario-DAO.js";
-import  {validaExistenciaDeFuncionario}  from "../services/validacoes.js"
-import  {validaFuncionario}  from "../services/validacoes.js"
+import FuncionarioDAO from "../dao/funcionario-DAO.js";
+import  { validaEntradaFuncionario, verificaSeExisteObjeto,verificaCampoVazio }  from "../services/validacoes.js"
 
 const funcionarioController = (app, bd) => {
-  const funcionarioDAO = new funcionarioDAO(bd);
+  const funcionarioDAO = new FuncionarioDAO(bd);
 
 
   app.get("/funcionarios", async (req, res) => {
@@ -22,7 +21,8 @@ const funcionarioController = (app, bd) => {
     const id = req.params.id;
     try {
       const funcionario = await funcionarioDAO.pegaUmFuncionarioPorID(id);
-      validaExistenciaDeFuncionario(funcionario,res)
+      await verificaSeExisteObjeto(funcionario,`Funcionario de id '${id}' não existe`)
+      res.status(200).json(funcionario);
     } catch (error) {
       res.status(404).json({
         msg: error.message,
@@ -35,7 +35,8 @@ const funcionarioController = (app, bd) => {
     const cpf = req.params.cpf;
     try {
       const funcionario = await funcionarioDAO.pegaUmFuncionarioporCpf(cpf);
-      validaExistenciaDeFuncionario(funcionario,res)
+      await verificaSeExisteObjeto(funcionario,`Funcionario de cpf '${cpf}' não existe`)
+      res.status(200).json(funcionario);
     } catch (error) {
       res.status(404).json({
         msg: error.message,
@@ -61,7 +62,8 @@ const funcionarioController = (app, bd) => {
             body.CEP,
             body.CNPJ
         );
-        validaFuncionario(novoFuncionario, res)
+        await validaEntradaFuncionario(novoFuncionario)
+            res.status(201).json(await funcionarioDAO.insereFuncionario(novoFuncionario));
       } catch (error) {
       res.status(400).json({
         msg: error.message,
@@ -73,8 +75,12 @@ const funcionarioController = (app, bd) => {
   app.delete("/funcionario/id/:id", async (req, res) => {
     const id = req.params.id;
     try {
-      const delFuncionario = await clienteDAO.deletaCliente(id);
-      res.status(201).json(delUsuario);
+      const funcionario = await funcionarioDAO.pegaUmFuncionarioPorID(id);
+      await verificaSeExisteObjeto(funcionario,`Fornecedor de id '${id}' não existe`)
+
+      const delFuncionario = await funcionarioDAO.deletaFuncionarios(id);
+
+      res.status(201).json(delFuncionario);
     } catch (error) {
       res.status(400).json({
         msg: error.message,
@@ -102,11 +108,16 @@ const funcionarioController = (app, bd) => {
           body.CEP,
           body.CNPJ
         );
+        const funcionario = await funcionarioDAO.pegaUmFuncionarioPorID(id);
+
         const attFuncionario = await funcionarioDAO.atualizaFuncionario(
           id,
           funcionarioAtualizado
         );
-        res.status(200).json(attFuncionario);
+        await verificaSeExisteObjeto(funcionario, `Funcionario de id '${id}' não existe`);
+            
+            verificaCampoVazio(funcionarioAtualizado);
+            res.status(200).json(attFuncionario);
       
     } catch (error) {
       res.status(400).json({
