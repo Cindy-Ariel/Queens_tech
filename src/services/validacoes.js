@@ -1,15 +1,41 @@
-export const validaExistenciaDeCliente = (cliente , res) => {
-   if (cliente){
-  return  res.status(201).json(cliente);
-  } else {
-   throw new Error("Não há um cliente com a informação inserida")
+import ClienteDAO from "../dao/cliente-DAO.js";
+import bd from "../infra/sqlite-db.js";
+
+
+const clienteDAO = new ClienteDAO(bd)
+ 
+ 
+ const verificaSeExisteObjeto = async (variavel, msgErro) => {
+  if (!variavel) {
+      throw new Error(msgErro)
   }
+  };
+
+const validaExistenciaDeVenda = (venda, res) => {
+  if (venda){
+ return  res.status(201).json(venda);
+ } else {
+  throw new Error("Não há um venda com a informação inserida")
+ }
 };
 
-export const validaTudo = (cpf,nome, email,telefone,rua,numero,bairro,cidade,uf,cep,senha) => {
-   if (cpf && nome && email && telefone && rua && numero && bairro && cidade && uf && cep && senha) {
-     return true;
-   } else {
-     throw new Error("Alguma informação não foi inserida.");
-   }
- };
+ const verificaCampoVazio = (variavel) => {
+  for (const key in variavel) {
+      if (!variavel[key]) {
+          throw new Error(`Campo '${key.toLocaleUpperCase()}' está vazio`)
+      }
+  }
+}
+
+const validaEntradaCliente = async (cliente) => {
+  verificaCampoVazio(cliente) 
+  const clientes = await clienteDAO.listaClientes()
+      const clienteCadastrado = clientes.filter(f => f.CPF == cliente.cpf)
+      if (clienteCadastrado.length > 0) {
+          throw new Error(`cliente de CPF '${cliente.cpf}' já cadastrado`)
+      }
+  
+}
+
+
+export {verificaSeExisteObjeto, validaExistenciaDeVenda, verificaCampoVazio,validaEntradaCliente }
