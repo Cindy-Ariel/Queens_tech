@@ -56,7 +56,6 @@ class VendaDao {
     };
 
     atualizaVenda = (id, VendaModel) => {
-        console.log(VendaModel)
         return new Promise((resolve, reject) => {
             this.bd.run(
                 "UPDATE VENDAS SET ID_PRODUTO = ?, ID_CLIENTE = ?, DESCONTO = ?, ID_FUNCIONARIO = ?, QUANTIDADE= ?, VALOR_TOTAL = ? , DATA_VENDA = ?, VALIDADE_GARANTIA = ? WHERE ID = ?",
