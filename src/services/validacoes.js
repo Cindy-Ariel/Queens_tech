@@ -1,5 +1,5 @@
-import ClienteDAO from "../dao/cliente-DAO.js";
-import FornecedorDAO from "../dao/Fornecedor-dao.js";
+import ClienteDAO from "../dao/cliente-dao.js";
+import FornecedorDAO from "../dao/fornecedor-dao.js";
 import ProdutoDAO from "../dao/produto-dao.js";
 import bd from "../infra/sqlite-db.js";
 
