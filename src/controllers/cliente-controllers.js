@@ -1,5 +1,5 @@
 import ClienteModel from "../model/cliente-model.js";
-import ClienteDAO from "../dao/cliente-DAO.js";
+import ClienteDAO from "../dao/cliente-dao.js";
 import { verificaSeExisteObjeto } from "../services/validacoes.js";
 import { verificaCampoVazio } from "../services/validacoes.js";
 import { validaEntradaCliente } from "../services/validacoes.js"
