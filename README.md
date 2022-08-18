@@ -1,3 +1,4 @@
+<img src="https://i.ibb.co/fCmnJXd/Whats-App-Image-2022-08-16-at-22-48-21.jpg" alt="Queens Tech" border="0">
 
 # 👑 API REST - Queens Tech
 
@@ -581,6 +582,92 @@ npm test
     "fornecedor deletado com sucesso!"
   }
   ```
+### Estoque
+
+- **GET /estoque**
+
+Esquema da resposta
+
+  ```json
+  [
+    {  
+      "ID": 1,
+      "CODIGO_PRODUTO": 1,
+      "QUANT_PRODUTO": 30
+    },
+    {	
+      "ID": 2,
+      "CODIGO_PRODUTO": 2,
+      "QUANT_PRODUTO": 20
+    },
+    {
+      "ID": 3,
+      "CODIGO_PRODUTO": 4,
+      "QUANT_PRODUTO": 15
+    }
+  ]
+  ```
+
+- **GET /estoque/codigo_produto/:codigo_produto**
+
+Esquema da resposta
+
+  ```json
+  {
+    "ID": 1,
+    "CODIGO_PRODUTO": 1,
+    "QUANT_PRODUTO": 30
+  }
+  ```
+
+- **POST /estoque**
+
+Esquema da requisição
+
+  ```json
+  {
+    "CODIGO_PRODUTO":3 ,
+		"QUANT_PRODUTO": 70
+  }
+  ```
+
+Esquema de resposta
+
+  ```json
+  {
+    "Estoque do produto de código 3 inserido com sucesso!"
+  }
+  ```
+
+- **PUT /estoque/codigo_produto/:codigo_produto**
+
+Esquema da requisição
+
+  ```json
+  {
+    "CODIGO_PRODUTO":1 ,
+		"QUANT_PRODUTO": 10
+  }
+  ```
+
+Esquema de resposta
+
+  ```json
+  {
+    "Estoque do produto de código 1 atualizado!"
+  }
+  ```
+
+- **DELETE /estoque/codigo_produto/:codigo_produto**
+
+Esquema de resposta
+
+  ```json
+  {
+    "Estoque do produto de código 4 deletado com sucesso!"
+  }
+  ```
+
 
 ### Funcionarios
 
