@@ -74,7 +74,7 @@ const funcionarioController = (app, bd) => {
     const id = req.params.id;
     try {
       const delFuncionario = await clienteDAO.deletaCliente(id);
-      res.status(201).json(delUsuario);
+      res.status(201).json(delFuncionario);
     } catch (error) {
       res.status(400).json({
         msg: error.message,
