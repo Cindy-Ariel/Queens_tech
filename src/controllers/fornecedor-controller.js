@@ -3,7 +3,7 @@ import FornecedorModel from "../model/fornecedor-model.js";
 import FornecedorDAO from "../dao/fornecedor-dao.js";
 import  { validaEntradaFornecedor, verificaSeExisteObjeto,verificaCampoVazio }  from "../services/validacoes.js"
 
-const FornecedorController = (app, bd) => {
+const fornecedorController = (app, bd) => {
     const fornecedorDAO = new FornecedorDAO(bd);
 
     app.get("/fornecedor", async (req, res) => {
@@ -117,4 +117,4 @@ const FornecedorController = (app, bd) => {
     });
 };
 
-export default FornecedorController;
+export default fornecedorController;

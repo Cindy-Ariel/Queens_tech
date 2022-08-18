@@ -5,7 +5,7 @@ import ProdutoDAO from "../dao/produto-dao.js";
 import  { validaEntradaProduto, verificaSeExisteObjeto,verificaCampoVazio }  from "../services/validacoes.js"
 
 
-const ProdutoController = (app, bd) => {
+const produtoController = (app, bd) => {
     const produtoDAO = new ProdutoDAO(bd);
 
     app.get("/produto", async (req, res) => {
@@ -109,4 +109,4 @@ const ProdutoController = (app, bd) => {
     });
 };
 
-export default ProdutoController; 
+export default produtoController; 

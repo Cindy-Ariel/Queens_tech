@@ -2,7 +2,7 @@ import EstoqueModel from "../model/estoque-model.js";
 import EstoqueDAO from "../dao/estoque-dao.js";
 import { validaEntradaEstoque, verificaSeExisteObjeto, verificaCampoVazio } from "../services/validacoes.js"
 
-const EstoqueController = (app, bd) => {
+const estoqueController = (app, bd) => {
 const estoqueDAO = new EstoqueDAO(bd);
 
 
@@ -91,4 +91,4 @@ const estoqueDAO = new EstoqueDAO(bd);
     });
 };
 
-export default EstoqueController;
+export default estoqueController;
