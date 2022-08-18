@@ -1,10 +1,10 @@
 import funcionarioModel from "../model/funcionario-model.js";
-import funcionarioDAO from "../dao/funcionario-DAO.js";
+import FuncionarioDAO from "../dao/funcionario-dao.js";
 import  {validaExistenciaDeFuncionario}  from "../services/validacoes.js"
 import  {validaFuncionario}  from "../services/validacoes.js"
 
 const funcionarioController = (app, bd) => {
-  const funcionarioDAO = new funcionarioDAO(bd);
+  const funcionarioDAO = new FuncionarioDAO(bd);
 
 
   app.get("/funcionarios", async (req, res) => {
@@ -73,7 +73,7 @@ const funcionarioController = (app, bd) => {
   app.delete("/funcionario/id/:id", async (req, res) => {
     const id = req.params.id;
     try {
-      const delFuncionario = await clienteDAO.deletaCliente(id);
+      const delFuncionario = await funcionarioDAO.deletaCliente(id);
       res.status(201).json(delFuncionario);
     } catch (error) {
       res.status(400).json({

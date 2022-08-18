@@ -1,4 +1,4 @@
-class funcionarioDAO {
+class FuncionarioDAO {
     constructor(bd) {
         this.bd = bd;
     }
@@ -114,4 +114,4 @@ class funcionarioDAO {
     };
 _
 }
-export default funcionarioDAO;
+export default FuncionarioDAO;
