@@ -28,7 +28,7 @@ VALUES
     `
 
 //==== Criando tabela funcionario 
-const  FUNCIONARIO_TABELA = `
+const FUNCIONARIO_TABELA = `
 CREATE TABLE IF NOT EXISTS "FUNCIONARIO" (
     "ID" INTEGER PRIMARY KEY AUTOINCREMENT,
     "NOME" varchar(64),
@@ -54,7 +54,7 @@ VALUES
 
 
 //==== Criando tabela vendas
-const TABELA_VENDAS= `
+const TABELA_VENDAS = `
 CREATE TABLE IF NOT EXISTS "VENDAS" (
 "ID" INTEGER PRIMARY KEY AUTOINCREMENT,
 "ID_PRODUTO" integer,
@@ -93,7 +93,7 @@ const TABELA_FORNECEDORES = `
     "CEP" varchar(10)
     );`;
 
-    //=== Populando tabela FORNECEDORES
+//=== Populando tabela FORNECEDORES
 const ADD_DADOS_FORNECEDORES = `
 INSERT INTO FORNECEDORES (CNPJ, NOME_FANTASIA, TELEFONE, RUA, NUMERO, BAIRRO, CIDADE, UF, CEP)
 VALUES 
@@ -128,7 +128,18 @@ const ADD_DADOS_PRODUTOS = `
     ('Notebook Lenovo Ultrafino IdeaPad 3 Ryzen 5 5500U 8GB 256GB SSD Prata 15.6 Linux', 'COMPUTADORES', 'Lenovo', 'Cinza', 1999.00, 'IdeaPad 3 possui design leve e compacto armazenamento SSD 256GB| Privacidade de webcam com câmera HD-720p| Wi-Fi AC ultrarrápido teclado numérico para trabalhar com mais agilidade nas suas planilhas', 3),
     ('Fone de ouvido Bluetooth Tranya T20','AUDIO E SOM','TRANYA','Preto', 90.00,'Som premium com graves profundos| Tempo de reprodução 8H| Design de 4 microfones para chamadas| Modo de jogo de baixa latência| IPX7 à prova d água', 4)
     `
-
+// CRIANDO TABELA ESTOQUE
+const TABELA_ESTOQUE = `
+    CREATE TABLE IF NOT EXISTS "ESTOQUE" (
+    "ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "CODIGO_PRODUTO" INTEGER,
+    "QUANT_PRODUTO" INTEGER,
+    FOREIGN KEY(CODIGO_PRODUTO) REFERENCES PRODUTOS(CODIGO)
+    );`;
+//=== Populando tabela ESTOQUE
+const ADD_DADOS_ESTOQUE = `
+    INSERT INTO ESTOQUE (CODIGO_PRODUTO, QUANT_PRODUTO) VALUES 
+        (1, 30), (2, 20), (4, 15)`
 
 
 
@@ -146,18 +157,21 @@ function populaTabela(dadosTabela) {
 
 
 db.serialize(() => {
-    criaTabela(CLIENTE_TABELA)
-    populaTabela(ADD_CLIENTE_DATA)
+    criaTabela(CLIENTE_TABELA);
+    populaTabela(ADD_CLIENTE_DATA);
 
-    criaTabela(FUNCIONARIO_TABELA)
-    populaTabela(ADD_FUNCIONARIO_DATA)
+    criaTabela(FUNCIONARIO_TABELA);
+    populaTabela(ADD_FUNCIONARIO_DATA);
 
-    criaTabela(TABELA_VENDAS)
-    populaTabela(ADD_DADOS_VENDAS)
+    criaTabela(TABELA_VENDAS);
+    populaTabela(ADD_DADOS_VENDAS);
 
-    criaTabela(TABELA_FORNECEDORES)
-    populaTabela(ADD_DADOS_FORNECEDORES)
+    criaTabela(TABELA_FORNECEDORES);
+    populaTabela(ADD_DADOS_FORNECEDORES);
 
-    criaTabela(TABELA_PRODUTOS)
-    populaTabela(ADD_DADOS_PRODUTOS)
+    criaTabela(TABELA_PRODUTOS);
+    populaTabela(ADD_DADOS_PRODUTOS);
+
+    criaTabela(TABELA_ESTOQUE);
+    populaTabela(ADD_DADOS_ESTOQUE);
 });
