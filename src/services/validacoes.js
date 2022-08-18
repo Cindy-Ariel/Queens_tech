@@ -1,11 +1,13 @@
 import ClienteDAO from "../dao/cliente-dao.js";
 import FornecedorDAO from "../dao/fornecedor-dao.js";
 import ProdutoDAO from "../dao/produto-dao.js";
+import EstoqueDAO from "../dao/estoque-dao.js";
 import bd from "../infra/sqlite-db.js";
 
 const fornecedorDAO = new FornecedorDAO(bd);
-const produtoDAO = new ProdutoDAO(bd)
-const clienteDAO = new ClienteDAO(bd)
+const produtoDAO = new ProdutoDAO(bd);
+const clienteDAO = new ClienteDAO(bd);
+const estoqueDAO = new EstoqueDAO(bd);
 
 
 // VERIFICA SE OS CAMPOS ESTÃO VAZIOS
@@ -53,6 +55,17 @@ export const validaEntradaCliente = async (cliente) => {
     const clienteCadastrado = clientes.filter(f => f.CPF == cliente.cpf)
     if (clienteCadastrado.length > 0) {
         throw new Error(`cliente de CPF '${cliente.cpf}' já cadastrado`)
+    }
+
+}
+
+// VALIDANDO Estoque
+export const validaEntradaEstoque = async (estoque) => {
+    verificaCampoVazio(estoque)
+    const estoques = await estoqueDAO.listaEstoques()
+    const estoqueCadastrado = estoques.filter(f => f.CODIGO_PRODUTO == estoque.codigo_produto)
+    if (estoqueCadastrado.length > 0) {
+        throw new Error(`Estoque do produto de  código '${estoque.codigo_produto}' já cadastrado`)
     }
 
 }
