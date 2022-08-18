@@ -129,6 +129,20 @@ const ADD_DADOS_PRODUTOS = `
     ('Fone de ouvido Bluetooth Tranya T20','AUDIO E SOM','TRANYA','Preto', 90.00,'Som premium com graves profundos| Tempo de reprodução 8H| Design de 4 microfones para chamadas| Modo de jogo de baixa latência| IPX7 à prova d água', 4)
     `
 
+    // CRIANDO TABELA ESTOQUE
+const TABELA_ESTOQUE = `
+CREATE TABLE IF NOT EXISTS "ESTOQUE" (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"CODIGO_PRODUTO" INTEGER,
+"QUANT_PRODUTO" INTEGER,
+FOREIGN KEY(CODIGO_PRODUTO) REFERENCES PRODUTOS(CODIGO)
+);`;
+   //=== Populando tabela ESTOQUE
+   const ADD_DADOS_ESTOQUE = `
+   INSERT INTO ESTOQUE (CODIGO_PRODUTO, QUANT_PRODUTO)
+   VALUES 
+       (1, 30), (2, 20), (4, 15)
+       `
 
 
 
@@ -160,4 +174,7 @@ db.serialize(() => {
 
     criaTabela(TABELA_PRODUTOS)
     populaTabela(ADD_DADOS_PRODUTOS)
+
+    criaTabela(TABELA_ESTOQUE)
+    populaTabela(ADD_DADOS_ESTOQUE)
 });
