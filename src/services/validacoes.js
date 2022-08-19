@@ -79,7 +79,7 @@ export const validaExistenciaDeFuncionario = (funcionario, res) => {
     }
 };
 
-export const validaFuncionario = (nome, cpf, rg, cargo, telefone, rua, numero, bairro, cidade, uf, cep, cnpj) => {
+export const validaFuncionario = ({nome, cpf, rg, cargo, telefone, rua, numero, bairro, cidade, uf, cep, cnpj}) => {
     if (nome && cpf && rg && cargo && telefone && rua && numero && bairro && cidade && uf && cep && cnpj) {
         return true;
     } else {
