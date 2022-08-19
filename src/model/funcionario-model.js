@@ -1,4 +1,4 @@
-class funcionarioModel {
+class FuncionarioModel {
 
     constructor(nome,cpf,rg,cargo,telefone,rua,numero,bairro,cidade,uf,cep,cnpj) {
         this.nome = nome; 
@@ -17,4 +17,4 @@ class funcionarioModel {
     }
   }
 
-export default funcionarioModel;
+export default FuncionarioModel;
