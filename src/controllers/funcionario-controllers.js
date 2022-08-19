@@ -1,4 +1,4 @@
-import funcionarioModel from "../model/funcionario-model.js";
+import FuncionarioModel from "../model/funcionario-model.js";
 import FuncionarioDAO from "../dao/funcionario-dao.js";
 import  {validaExistenciaDeFuncionario}  from "../services/validacoes.js"
 import  {validaFuncionario}  from "../services/validacoes.js"
@@ -47,21 +47,23 @@ const funcionarioController = (app, bd) => {
   app.post("/funcionario", async (req, res) => {
     const body = req.body;
     try {
-        const novoFuncionario = new funcionarioModel(
-            body.NOME,
-            body.CPF,
-            body.RG,
-            body.CARGO,
-            body.TELEFONE,
-            body.RUA,
-            body.NUMERO,
-            body.BAIRRO,
-            body.CIDADE,
-            body.UF,
-            body.CEP,
-            body.CNPJ
+        const novoFuncionario = new FuncionarioModel(
+            body.nome,
+            body.cpf,
+            body.rg,
+            body.cargo,
+            body.telefone,
+            body.rua,
+            body.numero,
+            body.bairro,
+            body.cidade,
+            body.uf,
+            body.cep,
+            body.cnpj
         );
-        validaFuncionario(novoFuncionario, res)
+        //console.log(novoFuncionario)
+        validaFuncionario(novoFuncionario)
+        res.status(201).json(await funcionarioDAO.insereFuncionario(novoFuncionario));
       } catch (error) {
       res.status(400).json({
         msg: error.message,
@@ -73,7 +75,7 @@ const funcionarioController = (app, bd) => {
   app.delete("/funcionario/id/:id", async (req, res) => {
     const id = req.params.id;
     try {
-      const delFuncionario = await funcionarioDAO.deletaCliente(id);
+      const delFuncionario = await funcionarioDAO.deletaFuncionarios(id);
       res.status(201).json(delFuncionario);
     } catch (error) {
       res.status(400).json({
@@ -88,7 +90,7 @@ const funcionarioController = (app, bd) => {
     const body = req.body;
 
     try {
-        const funcionarioAtualizado = new funcionarioModel(
+        const funcionarioAtualizado = new FuncionarioModel(
           body.NOME,
           body.CPF,
           body.RG,
