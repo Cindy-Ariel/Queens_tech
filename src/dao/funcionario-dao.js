@@ -42,24 +42,24 @@ class FuncionarioDAO {
       }; 
 
 
-    insereFuncionario = (funcionarioModel) => {
+    insereFuncionario = (FuncionarioModel) => {
         return new Promise((resolve, reject) => {
             this.bd.run(
 
                 "INSERT INTO FUNCIONARIO VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                funcionarioModel.id,
-                funcionarioModel.nome,
-                funcionarioModel.cpf,
-                funcionarioModel.rg,
-                funcionarioModel.cargo,
-                funcionarioModel.telefone,
-                funcionarioModel.rua,
-                funcionarioModel.numero,
-                funcionarioModel.bairro,
-                funcionarioModel.cidade,
-                funcionarioModel.uf,
-                funcionarioModel.cep,
-                funcionarioModel.cnpj,
+                FuncionarioModel.id,
+                FuncionarioModel.nome,
+                FuncionarioModel.cpf,
+                FuncionarioModel.rg,
+                FuncionarioModel.cargo,
+                FuncionarioModel.telefone,
+                FuncionarioModel.rua,
+                FuncionarioModel.numero,
+                FuncionarioModel.bairro,
+                FuncionarioModel.cidade,
+                FuncionarioModel.uf,
+                FuncionarioModel.cep,
+                FuncionarioModel.cnpj,
                 (error) => {
                     if (error) {
                         reject(error);
@@ -71,23 +71,23 @@ class FuncionarioDAO {
         });
     };
 
-    atualizaFuncionario = (id, funcionarioModel ) => {
+    atualizaFuncionario = (id, FuncionarioModel ) => {
         return new Promise((resolve, reject) => {
             this.bd.run(
                 "UPDATE FUNCIONARIO SET  NOME = ?, CPF = ?, RG = ?, CARGO = ?, TELEFONE = ?, RUA = ?, NUMERO = ?, BAIRRO = ? , CIDADE = ?, UF = ?, CEP = ? , CNPJ = ? WHERE ID = ?",
     
-                funcionarioModel.nome,
-                funcionarioModel.cpf,
-                funcionarioModel.rg,
-                funcionarioModel.cargo,
-                funcionarioModel.telefone,
-                funcionarioModel.rua,
-                funcionarioModel.numero,
-                funcionarioModel.bairro,
-                funcionarioModel.cidade,
-                funcionarioModel.uf,
-                funcionarioModel.cep,
-                funcionarioModel.cnpj,
+                FuncionarioModel.nome,
+                FuncionarioModel.cpf,
+                FuncionarioModel.rg,
+                FuncionarioModel.cargo,
+                FuncionarioModel.telefone,
+                FuncionarioModel.rua,
+                FuncionarioModel.numero,
+                FuncionarioModel.bairro,
+                FuncionarioModel.cidade,
+                FuncionarioModel.uf,
+                FuncionarioModel.cep,
+                FuncionarioModel.cnpj,
                 id,
                 (error) => {
                     if (error) {
