@@ -864,7 +864,7 @@ Esquema da resposta
 
 ## 🔌 Link do Heroku
 
-<a href="protected-scrubland-58745.herokuapp.com">API_REST-Queens_Tech</a>
+<a href="protected-scrubland-58745.herokuapp.com/funcionarios">API_REST-Queens_Tech</a>
 
 ## 😊 Desenvolvido por
 
